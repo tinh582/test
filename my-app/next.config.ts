@@ -1,0 +1,21 @@
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  // Cấu hình Header toàn cục để xử lý triệt để CORS
+  async headers() {
+    return [
+      {
+        // Áp dụng cho mọi API route
+        source: "/api/:path*",
+        headers: [
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          { key: "Access-Control-Allow-Origin", value: "*" }, // Cho phép mọi domain gọi vào (hoặc thay bằng "http://localhost:5173")
+          { key: "Access-Control-Allow-Methods", value: "GET,DELETE,PATCH,POST,PUT,OPTIONS" },
+          { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization" },
+        ]
+      }
+    ]
+  }
+};
+
+export default nextConfig;
