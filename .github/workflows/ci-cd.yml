@@ -1,0 +1,70 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      
+      # Frontend (Vite React App)
+      - name: Install Frontend dependencies
+        run: npm install
+        working-directory: ./Frontend
+      
+      - name: Lint Frontend
+        run: npm run lint
+        working-directory: ./Frontend
+        continue-on-error: false
+      
+      - name: Build Frontend
+        run: npm run build
+        working-directory: ./Frontend
+        continue-on-error: false
+      
+      # My-App (Next.js)
+      - name: Install my-app dependencies
+        run: npm install
+        working-directory: ./my-app
+      
+      - name: Lint my-app
+        run: npm run lint
+        working-directory: ./my-app
+        continue-on-error: false
+      
+      - name: Build my-app
+        run: npm run build
+        working-directory: ./my-app
+        continue-on-error: false
+      
+      # Expense-Manager (Next.js)
+      - name: Install expense-manager dependencies
+        run: npm install
+        working-directory: ./my-app/expense-manager
+      
+      - name: Lint expense-manager
+        run: npm run lint
+        working-directory: ./my-app/expense-manager
+        continue-on-error: false
+      
+      - name: Build expense-manager
+        run: npm run build
+        working-directory: ./my-app/expense-manager
+        continue-on-error: false
