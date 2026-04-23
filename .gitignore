@@ -8,4 +8,6 @@ coverage/
 *.log
 *.rar
 .env*
+!.env.example
+!**/.env.example
 quan_ly_chi_tieu.sql
