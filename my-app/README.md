@@ -1,5 +1,19 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Environment Variables
+
+For Railway MySQL + Vercel deployment, create `.env.local` from `.env.example` and update secrets:
+
+```env
+DB_HOST=shortline.proxy.rlwy.net
+DB_PORT=18199
+DB_USER=root
+DB_PASSWORD=REPLACE_WITH_YOUR_RAILWAY_PASSWORD
+DB_NAME=railway
+DB_SSL=true
+FRONTEND_ORIGIN=https://web-frontend-rho-opal.vercel.app
+```
+
 ## Getting Started
 
 First, run the development server:
