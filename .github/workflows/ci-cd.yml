@@ -23,6 +23,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: |
+            Frontend/package-lock.json
+            my-app/package-lock.json
+            my-app/expense-manager/package-lock.json
       
       # Frontend (Vite React App)
       - name: Install Frontend dependencies
@@ -31,6 +35,11 @@ jobs:
       
       - name: Lint Frontend
         run: npm run lint
+        working-directory: ./Frontend
+        continue-on-error: false
+
+      - name: Test Frontend
+        run: npm run test --if-present
         working-directory: ./Frontend
         continue-on-error: false
       
@@ -48,6 +57,11 @@ jobs:
         run: npm run lint
         working-directory: ./my-app
         continue-on-error: false
+
+      - name: Test my-app
+        run: npm run test --if-present
+        working-directory: ./my-app
+        continue-on-error: false
       
       - name: Build my-app
         run: npm run build
@@ -61,6 +75,11 @@ jobs:
       
       - name: Lint expense-manager
         run: npm run lint
+        working-directory: ./my-app/expense-manager
+        continue-on-error: false
+
+      - name: Test expense-manager
+        run: npm run test --if-present
         working-directory: ./my-app/expense-manager
         continue-on-error: false
       
