@@ -19,7 +19,7 @@ Frontend app for quan lý chi tiêu built with React + Vite.
 Tạo file `.env` từ `.env.example` và cập nhật giá trị phù hợp:
 
 ```env
-VITE_API_URL=http://localhost:3000/api
+VITE_API_URL=https://test-tau-flax-71.vercel.app/api
 ```
 
 Không hardcode URL trong code. Toàn bộ request API được lấy từ `import.meta.env.VITE_API_URL`.

@@ -10,6 +10,8 @@ const normalizeBaseUrl = () => {
 
 const buildUrl = (path) => `${normalizeBaseUrl()}${path}`
 
+export const getApiBaseUrl = () => normalizeBaseUrl()
+
 const toFriendlyNetworkError = (error) => {
   if (error instanceof TypeError) {
     return new Error(

@@ -2,20 +2,38 @@
 import { db } from '../../lib/db';
 import { NextResponse } from 'next/server';
 
-// Hàm hỗ trợ CORS cho Frontend gọi khác cổng
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+const allowedOrigins = [
+  process.env.FRONTEND_ORIGIN,
+  'https://web-frontend-rho-opal.vercel.app',
+  'http://localhost:5173',
+].filter(Boolean);
+
+const defaultOrigin = 'https://web-frontend-rho-opal.vercel.app';
+
+const buildCorsHeaders = (requestOrigin) => {
+  const allowOrigin = allowedOrigins.includes(requestOrigin)
+    ? requestOrigin
+    : defaultOrigin;
+
+  return {
+    'Access-Control-Allow-Origin': allowOrigin,
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    Vary: 'Origin',
+  };
 };
 
 // Xử lý Preflight Request (Bắt buộc khi dùng fetch POST từ domain/port khác)
-export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders });
+export async function OPTIONS(request) {
+  const requestOrigin = request.headers.get('origin') || '';
+  return NextResponse.json({}, { headers: buildCorsHeaders(requestOrigin) });
 }
 
 // LẤY DANH SÁCH GIAO DỊCH
-export async function GET() {
+export async function GET(request) {
+  const requestOrigin = request.headers.get('origin') || '';
+  const corsHeaders = buildCorsHeaders(requestOrigin);
+
   try {
     // Trích xuất category_name thành category để khớp với state Frontend
     const query = `
@@ -43,6 +61,9 @@ export async function GET() {
 
 // THÊM GIAO DỊCH MỚI
 export async function POST(request) {
+  const requestOrigin = request.headers.get('origin') || '';
+  const corsHeaders = buildCorsHeaders(requestOrigin);
+
   try {
     const body = await request.json();
     const { title, amount, category, date, createdAt } = body;

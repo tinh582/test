@@ -2,16 +2,36 @@
 import { db } from '../../lib/db';
 import { NextResponse } from 'next/server';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+const allowedOrigins = [
+  process.env.FRONTEND_ORIGIN,
+  'https://web-frontend-rho-opal.vercel.app',
+  'http://localhost:5173',
+].filter(Boolean);
+
+const defaultOrigin = 'https://web-frontend-rho-opal.vercel.app';
+
+const buildCorsHeaders = (requestOrigin) => {
+  const allowOrigin = allowedOrigins.includes(requestOrigin)
+    ? requestOrigin
+    : defaultOrigin;
+
+  return {
+    'Access-Control-Allow-Origin': allowOrigin,
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    Vary: 'Origin',
+  };
 };
 
-export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders });
+export async function OPTIONS(request) {
+  const requestOrigin = request.headers.get('origin') || '';
+  return NextResponse.json({}, { headers: buildCorsHeaders(requestOrigin) });
 }
 
-export async function GET() {
+export async function GET(request) {
+  const requestOrigin = request.headers.get('origin') || '';
+  const corsHeaders = buildCorsHeaders(requestOrigin);
+
   try {
     // Thử query 1 lệnh đơn giản để check DB
     await db.query('SELECT 1');

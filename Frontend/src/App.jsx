@@ -3,7 +3,7 @@ import ExpenseForm from './components/ExpenseForm'
 import TimeFilterPanel from './components/TimeFilterPanel'
 import TransactionsTable from './components/TransactionsTable'
 import { defaultForm, initialTransactions } from './constants/transactions'
-import { addTransaction, fetchTransactions } from './api/transactions'
+import { addTransaction, fetchTransactions, getApiBaseUrl } from './api/transactions'
 import { formatCurrency } from './utils/formatCurrency'
 import { isInFilterRange } from './utils/transactionFilters'
 import './App.css'
@@ -44,6 +44,13 @@ function App() {
   // State mới cho Modal Health Check
   const [showHealthModal, setShowHealthModal] = useState(false)
   const [healthData, setHealthData] = useState({ status: 'idle', data: null })
+  const apiHealthUrl = useMemo(() => {
+    try {
+      return `${getApiBaseUrl()}/health`
+    } catch {
+      return ''
+    }
+  }, [])
 
   // State mới cho Modal Tổng chính thức
   const [showGrandTotalModal, setShowGrandTotalModal] = useState(false)
@@ -231,10 +238,19 @@ function App() {
 
   // === HÀM TRANG HEALTH CHECK (MỚI) ===
   const handleCheckHealth = async () => {
+    if (!apiHealthUrl) {
+      setShowHealthModal(true)
+      setHealthData({
+        status: 'error',
+        data: 'Thiếu VITE_API_URL. Vui lòng cấu hình biến môi trường cho Frontend.',
+      })
+      return
+    }
+
     setShowHealthModal(true)
     setHealthData({ status: 'loading', data: null })
     try {
-      const res = await fetch('http://localhost:3000/api/health')
+      const res = await fetch(apiHealthUrl)
       if (!res.ok) throw new Error(`Lỗi kết nối: ${res.status} (Bạn hãy kiểm tra tên thư mục api/health bên Next.js)`)
       const data = await res.json()
       setHealthData({ status: 'success', data })
@@ -264,7 +280,7 @@ function App() {
 
             <button 
               className="theme-toggle-btn" 
-              onClick={() => window.open('http://localhost:3000/api/health', '_blank')}
+              onClick={() => window.open(apiHealthUrl || 'https://test-tau-flax-71.vercel.app/api/health', '_blank')}
               title="Mở trang API Health để giảng viên kiểm tra"
               style={{
                 background: 'rgba(59, 130, 246, 0.15)',
