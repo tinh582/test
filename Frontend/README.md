@@ -38,6 +38,17 @@ npm run lint
 npm run build
 ```
 
+## Docker
+
+Build and run the frontend in a container:
+
+```bash
+docker build --build-arg VITE_API_URL=http://localhost:3000/api -t expense-frontend .
+docker run --rm -p 8080:80 expense-frontend
+```
+
+If you start the full workspace compose from the repo root, the frontend is available at `http://localhost:8080`.
+
 ## Notes
 
 - App sẽ hiển thị lỗi thân thiện nếu backend chưa cấu hình.
