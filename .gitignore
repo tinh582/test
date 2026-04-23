@@ -12,3 +12,4 @@ coverage/
 !**/.env.example
 quan_ly_chi_tieu.sql
 .vercel
+.env*.local
