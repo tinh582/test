@@ -1,5 +1,5 @@
 // src/app/api/transactions/route.js
-import { db, ensureSchema } from '../../lib/db';
+import { db } from '../../lib/db';
 import { NextResponse } from 'next/server';
 
 // Hàm hỗ trợ CORS cho Frontend gọi khác cổng
@@ -17,8 +17,6 @@ export async function OPTIONS() {
 // LẤY DANH SÁCH GIAO DỊCH
 export async function GET() {
   try {
-    await ensureSchema();
-
     // Trích xuất category_name thành category để khớp với state Frontend
     const query = `
       SELECT 
@@ -46,8 +44,6 @@ export async function GET() {
 // THÊM GIAO DỊCH MỚI
 export async function POST(request) {
   try {
-    await ensureSchema();
-
     const body = await request.json();
     const { title, amount, category, date, createdAt } = body;
 

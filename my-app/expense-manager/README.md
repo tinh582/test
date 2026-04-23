@@ -29,23 +29,8 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Docker
-
-Build and run this app in a container:
-
-```bash
-docker build -t expense-manager .
-docker run --rm -p 3001:3000 expense-manager
-```
-
-If you start the full workspace compose from the repo root, this app is available at `http://localhost:3001`.
-
 ## Deploy on Vercel
 
-Deploy this folder as its own Vercel project and set the MySQL environment variables in the Vercel dashboard.
-
-The app needs an external MySQL host because Vercel cannot run the local Docker database from this repo.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-See [DEPLOYMENT.md](../../DEPLOYMENT.md) for the full monorepo setup.

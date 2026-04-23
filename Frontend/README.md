@@ -24,8 +24,6 @@ VITE_API_URL=http://localhost:3000/api
 
 Không hardcode URL trong code. Toàn bộ request API được lấy từ `import.meta.env.VITE_API_URL`.
 
-When deploying to Vercel, set `VITE_API_URL` to the live backend URL, for example `https://<your-my-app-project>.vercel.app/api`.
-
 ## Run Locally
 
 ```bash
@@ -39,17 +37,6 @@ npm run dev
 npm run lint
 npm run build
 ```
-
-## Docker
-
-Build and run the frontend in a container:
-
-```bash
-docker build --build-arg VITE_API_URL=http://localhost:3000/api -t expense-frontend .
-docker run --rm -p 8080:80 expense-frontend
-```
-
-If you start the full workspace compose from the repo root, the frontend is available at `http://localhost:8080`.
 
 ## Notes
 

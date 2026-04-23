@@ -31,27 +31,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-Deploy this folder as its own Vercel project and set the MySQL environment variables in the Vercel dashboard.
-
-The app needs an external MySQL host because Vercel cannot run the local Docker database from this repo.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-See [DEPLOYMENT.md](../DEPLOYMENT.md) for the full monorepo setup.
-
-## Docker
-
-Run the app and MySQL together with Docker Compose:
-
-```bash
-docker compose up --build
-```
-
-The app will be available at `http://localhost:3000` and MySQL at `localhost:3306`.
-
-Default container credentials:
-
-- Database: `quan_ly_chi_tieu`
-- User: `appuser`
-- Password: `apppassword`
-- Root password: `rootpassword`
