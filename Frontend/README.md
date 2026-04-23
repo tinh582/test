@@ -24,6 +24,8 @@ VITE_API_URL=http://localhost:3000/api
 
 Không hardcode URL trong code. Toàn bộ request API được lấy từ `import.meta.env.VITE_API_URL`.
 
+When deploying to Vercel, set `VITE_API_URL` to the live backend URL, for example `https://<your-my-app-project>.vercel.app/api`.
+
 ## Run Locally
 
 ```bash

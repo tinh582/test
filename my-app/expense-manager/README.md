@@ -42,6 +42,10 @@ If you start the full workspace compose from the repo root, this app is availabl
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Deploy this folder as its own Vercel project and set the MySQL environment variables in the Vercel dashboard.
+
+The app needs an external MySQL host because Vercel cannot run the local Docker database from this repo.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+See [DEPLOYMENT.md](../../DEPLOYMENT.md) for the full monorepo setup.
